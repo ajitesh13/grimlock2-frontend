@@ -493,7 +493,7 @@ export default defineConfig({
 ### Development Build
 
 ```bash
-npm run dev
+pnpm run dev
 # Starts dev server with HMR
 # Source maps enabled
 # Fast compilation
@@ -502,7 +502,7 @@ npm run dev
 ### Production Build
 
 ```bash
-npm run build
+pnpm run build
 # 1. TypeScript compilation (type checking)
 # 2. Vite bundling and minification
 # 3. Output to dist/ folder
@@ -555,7 +555,7 @@ Vite automatically code splits:
 ### Bundle Analysis
 
 ```bash
-npm run build
+pnpm run build
 # Check dist/ folder sizes
 ```
 
@@ -628,14 +628,14 @@ npx tsc --noEmit
 
 # Common fix: clear and reinstall
 rm -rf node_modules
-npm install
+pnpm install
 ```
 
 ### Vite Cache Issues
 
 ```bash
 rm -rf node_modules/.vite
-npm run dev
+pnpm run dev
 ```
 
 ### API Connection
@@ -649,7 +649,7 @@ npm run dev
 ```bash
 # Clean build
 rm -rf dist
-npm run build
+pnpm run build
 ```
 
 ---

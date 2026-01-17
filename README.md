@@ -23,10 +23,10 @@ Modern React + TypeScript dashboard for visualizing AI agent audit trails.
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start dev server
-npm run dev
+pnpm run dev
 ```
 
 Visit **http://localhost:3000**
@@ -35,10 +35,10 @@ Visit **http://localhost:3000**
 
 ```bash
 # Build TypeScript + Bundle
-npm run build
+pnpm run build
 
 # Preview production build
-npm run preview
+pnpm run preview
 ```
 
 ## Configuration
@@ -72,17 +72,80 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/
 
 ## Deployment
 
-### Static Hosting (Vercel, Netlify)
+### Automated Deployment with GitHub Actions (Vercel)
+
+This project includes a GitHub Actions workflow that automatically deploys to Vercel on every push to `main` or `master` branch.
+
+#### Setup Instructions
+
+1. **Create a Vercel Account & Project**
+   - Go to [vercel.com](https://vercel.com) and sign up
+   - Import your GitHub repository or create a new project
+   - Note your project settings
+
+2. **Get Vercel Credentials**
+   
+   Install Vercel CLI locally:
+   ```bash
+   pnpm add -g vercel
+   ```
+
+   Login and link your project:
+   ```bash
+   vercel login
+   vercel link
+   ```
+
+   This creates a `.vercel` directory with your project configuration.
+
+3. **Get Vercel Token**
+   
+   Generate a token at: https://vercel.com/account/tokens
+   - Create a new token
+   - Copy the token value
+
+4. **Add GitHub Secrets**
+   
+   Go to your GitHub repository → Settings → Secrets and variables → Actions
+   
+   Add the following secret:
+   - `VERCEL_TOKEN`: Your Vercel token from step 3
+
+5. **Commit and Push**
+   
+   The workflow will automatically trigger on push to `main`/`master` and deploy to Vercel.
+
+#### Workflow Features
+
+- ✅ Automatic deployment on push to main
+- ✅ Preview deployments for pull requests
+- ✅ Build verification before deployment
+- ✅ Uses Vercel's production environment
+
+#### Manual Deployment (Vercel CLI)
 
 ```bash
-npm run build
+# Install Vercel CLI
+pnpm add -g vercel
+
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+### Static Hosting (Netlify, etc.)
+
+```bash
+pnpm run build
 # Deploy the dist/ folder
 ```
 
 ### GCP Cloud Storage + CDN
 
 ```bash
-npm run build
+pnpm run build
 gsutil -m rsync -r dist/ gs://your-bucket/
 ```
 
@@ -90,11 +153,12 @@ gsutil -m rsync -r dist/ gs://your-bucket/
 
 ```dockerfile
 FROM node:18-alpine AS builder
+RUN npm install -g pnpm
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -135,10 +199,10 @@ dashboard/
 ### Available Scripts
 
 ```bash
-npm run dev      # Start dev server with HMR
-npm run build    # Build for production
-npm run preview  # Preview production build
-npm run lint     # Run ESLint
+pnpm run dev      # Start dev server with HMR
+pnpm run build    # Build for production
+pnpm run preview  # Preview production build
+pnpm run lint     # Run ESLint
 ```
 
 ### Type Checking
@@ -146,7 +210,7 @@ npm run lint     # Run ESLint
 TypeScript is checked during build:
 
 ```bash
-npm run build  # Includes type checking
+pnpm run build  # Includes type checking
 ```
 
 ## API Integration
@@ -198,8 +262,8 @@ export interface CustomEventData {
 
 ```bash
 rm -rf node_modules .vite
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### Build fails
