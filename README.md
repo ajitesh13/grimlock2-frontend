@@ -1,0 +1,231 @@
+# Grimlock2 Dashboard
+
+Modern React + TypeScript dashboard for visualizing AI agent audit trails.
+
+## Tech Stack
+
+- **Build Tool**: Vite 5
+- **Framework**: React 18
+- **Language**: TypeScript
+- **Router**: React Router v6
+- **HTTP Client**: Axios
+- **Styling**: Custom CSS
+- **Date Formatting**: date-fns
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- Grimlock2 backend API running
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+Visit **http://localhost:3000**
+
+### Build for Production
+
+```bash
+# Build TypeScript + Bundle
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Configuration
+
+### Environment Variables
+
+Create `.env` (optional):
+
+```bash
+# API endpoint (defaults to http://localhost:8080/api/v1)
+VITE_API_URL=http://localhost:8080/api/v1
+```
+
+### API Connection
+
+The dashboard connects to the Grimlock2 backend API. Update `src/api.ts` if needed:
+
+```typescript
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+```
+
+## Features
+
+- **Runs List**: Browse all agent runs with filters
+- **Run Timeline**: Detailed event timeline view
+- **Event Filtering**: Filter by event type, time range
+- **Human Edit Diff**: Side-by-side comparison of AI vs human edits
+- **User Statistics**: Event counts and metrics per user
+- **Type Safety**: Full TypeScript coverage
+- **Fast HMR**: Vite hot module reloading
+
+## Deployment
+
+### Static Hosting (Vercel, Netlify)
+
+```bash
+npm run build
+# Deploy the dist/ folder
+```
+
+### GCP Cloud Storage + CDN
+
+```bash
+npm run build
+gsutil -m rsync -r dist/ gs://your-bucket/
+```
+
+### Docker
+
+```dockerfile
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+Build and run:
+```bash
+docker build -t grimlock-dashboard .
+docker run -p 80:80 grimlock-dashboard
+```
+
+## Development
+
+### Project Structure
+
+```
+dashboard/
+├── src/
+│   ├── main.tsx           # App entry point
+│   ├── App.tsx            # Root component with routing
+│   ├── types.ts           # TypeScript type definitions
+│   ├── api.ts             # API client
+│   ├── index.css          # Global styles
+│   └── components/
+│       ├── RunsList.tsx
+│       ├── RunTimeline.tsx
+│       ├── EventCard.tsx
+│       ├── HumanEditDiff.tsx
+│       └── UserStats.tsx
+├── index.html             # HTML entry
+├── vite.config.ts         # Vite configuration
+├── tsconfig.json          # TypeScript config
+└── package.json
+```
+
+### Available Scripts
+
+```bash
+npm run dev      # Start dev server with HMR
+npm run build    # Build for production
+npm run preview  # Preview production build
+npm run lint     # Run ESLint
+```
+
+### Type Checking
+
+TypeScript is checked during build:
+
+```bash
+npm run build  # Includes type checking
+```
+
+## API Integration
+
+The dashboard expects these API endpoints:
+
+- `GET /api/v1/runs` - List all runs
+- `GET /api/v1/runs/:run_id` - Get run timeline
+- `GET /api/v1/stats/user/:user_token_hash` - Get user stats
+
+See `AGENTS.md` for complete API reference.
+
+## Customization
+
+### Changing Colors
+
+Edit `src/index.css`:
+
+```css
+.badge-info {
+  background-color: #dbeafe;  /* Change this */
+  color: #1e40af;
+}
+```
+
+### Adding New Pages
+
+1. Create component in `src/components/`
+2. Add route in `src/App.tsx`:
+   ```tsx
+   <Route path="/new-page" element={<NewPage />} />
+   ```
+3. Add navigation link
+
+### Custom Event Types
+
+Add type in `src/types.ts`:
+
+```typescript
+export interface CustomEventData {
+  field1: string;
+  field2: number;
+}
+```
+
+## Troubleshooting
+
+### Dev server won't start
+
+```bash
+rm -rf node_modules .vite
+npm install
+npm run dev
+```
+
+### Build fails
+
+```bash
+# Check TypeScript errors
+npx tsc --noEmit
+```
+
+### API connection issues
+
+Check CORS settings on backend and verify `VITE_API_URL`.
+
+## Performance
+
+- **Dev Server**: 1-3s cold start
+- **HMR**: 50-200ms updates
+- **Production Build**: ~10-20s
+- **Bundle Size**: ~150KB (gzipped)
+
+## Browser Support
+
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+
+## License
+
+MIT
