@@ -13,7 +13,7 @@ This guide explains how to set up automated deployments to Vercel using GitHub A
 ### Step 1: Install Vercel CLI
 
 ```bash
-pnpm add -g vercel@latest
+npm install -g vercel@latest
 ```
 
 ### Step 2: Link Your Project
@@ -67,14 +67,13 @@ The workflow will automatically trigger and deploy your app! 🎉
 ### Workflow Steps
 
 1. Checkout code from GitHub
-2. Install pnpm
-3. Set up Node.js 18 with pnpm caching
-4. Install dependencies (`pnpm install --frozen-lockfile`)
-5. Build the project (`pnpm run build`)
-6. Install Vercel CLI
-7. Pull Vercel environment settings
-8. Build artifacts for Vercel
-9. Deploy to Vercel production
+2. Set up Node.js 22 with npm caching
+3. Install dependencies (`npm ci`)
+4. Build the project (`npm run build`)
+5. Install Vercel CLI
+6. Pull Vercel environment settings
+7. Build artifacts for Vercel
+8. Deploy to Vercel production
 
 ### Deployment URL
 
@@ -100,7 +99,7 @@ vercel --prod
 
 ```json
 {
-  "buildCommand": "pnpm run build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
@@ -168,7 +167,7 @@ Add environment variables in Vercel dashboard:
 
 **Check TypeScript errors:**
 ```bash
-pnpm run build
+npm run build
 ```
 
 **View logs in GitHub Actions:**

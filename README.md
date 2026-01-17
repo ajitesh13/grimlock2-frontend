@@ -23,10 +23,10 @@ Modern React + TypeScript dashboard for visualizing AI agent audit trails.
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 
 # Start dev server
-pnpm run dev
+npm run dev
 ```
 
 Visit **http://localhost:3000**
@@ -35,10 +35,10 @@ Visit **http://localhost:3000**
 
 ```bash
 # Build TypeScript + Bundle
-pnpm run build
+npm run build
 
 # Preview production build
-pnpm run preview
+npm run preview
 ```
 
 ## Configuration
@@ -87,7 +87,7 @@ This project includes a GitHub Actions workflow that automatically deploys to Ve
    
    Install Vercel CLI locally:
    ```bash
-   pnpm add -g vercel
+   npm install -g vercel
    ```
 
    Login and link your project:
@@ -126,7 +126,7 @@ This project includes a GitHub Actions workflow that automatically deploys to Ve
 
 ```bash
 # Install Vercel CLI
-pnpm add -g vercel
+npm install -g vercel
 
 # Deploy to preview
 vercel
@@ -138,27 +138,26 @@ vercel --prod
 ### Static Hosting (Netlify, etc.)
 
 ```bash
-pnpm run build
+npm run build
 # Deploy the dist/ folder
 ```
 
 ### GCP Cloud Storage + CDN
 
 ```bash
-pnpm run build
+npm run build
 gsutil -m rsync -r dist/ gs://your-bucket/
 ```
 
 ### Docker
 
 ```dockerfile
-FROM node:18-alpine AS builder
-RUN npm install -g pnpm
+FROM node:22-alpine AS builder
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
-RUN pnpm run build
+RUN npm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -199,10 +198,10 @@ dashboard/
 ### Available Scripts
 
 ```bash
-pnpm run dev      # Start dev server with HMR
-pnpm run build    # Build for production
-pnpm run preview  # Preview production build
-pnpm run lint     # Run ESLint
+npm run dev      # Start dev server with HMR
+npm run build    # Build for production
+npm run preview  # Preview production build
+npm run lint     # Run ESLint
 ```
 
 ### Type Checking
@@ -210,7 +209,7 @@ pnpm run lint     # Run ESLint
 TypeScript is checked during build:
 
 ```bash
-pnpm run build  # Includes type checking
+npm run build  # Includes type checking
 ```
 
 ## API Integration
@@ -262,8 +261,8 @@ export interface CustomEventData {
 
 ```bash
 rm -rf node_modules .vite
-pnpm install
-pnpm run dev
+npm install
+npm run dev
 ```
 
 ### Build fails

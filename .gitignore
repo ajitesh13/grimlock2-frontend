@@ -1,8 +1,8 @@
 # Dependencies
 node_modules
 
-# Lock files (use pnpm-lock.yaml only)
-package-lock.json
+# Lock files (use package-lock.json)
+pnpm-lock.yaml
 yarn.lock
 
 # Build outputs
