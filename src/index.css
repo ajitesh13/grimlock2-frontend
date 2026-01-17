@@ -244,4 +244,66 @@ code {
   overflow-x: auto;
   font-family: monospace;
   font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.network-call-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+}
+
+.method-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.method-get {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.method-post {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.method-put {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.method-delete {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.tab-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.tab-button:hover {
+  background-color: #d1d5db;
+}
+
+.tab-button.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.tab-button.active:hover {
+  background-color: #1d4ed8;
 }

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRunTimeline } from '../api';
 import EventCard from './EventCard';
 import type { Event } from '../types';
+
+type ViewMode = 'all' | 'logs' | 'network';
 
 function RunTimeline() {
   const { runId } = useParams<{ runId: string }>();
@@ -10,7 +12,7 @@ function RunTimeline() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [eventTypeFilter, setEventTypeFilter] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('all');
 
   useEffect(() => {
     if (runId) {
@@ -33,11 +35,33 @@ function RunTimeline() {
     }
   };
 
-  const filteredEvents = eventTypeFilter
-    ? events.filter(e => e.event_type === eventTypeFilter)
-    : events;
+  const { logs, networkCalls } = useMemo(() => {
+    const logsList: Event[] = [];
+    const networkList: Event[] = [];
 
-  const uniqueEventTypes = [...new Set(events.map(e => e.event_type))];
+    events.forEach(event => {
+      if (event.event_type === 'NETWORK_CALL' || 
+          event.event_type === 'TOOL_CALL_START' || 
+          event.event_type === 'TOOL_CALL_END') {
+        networkList.push(event);
+      } else {
+        logsList.push(event);
+      }
+    });
+
+    return { logs: logsList, networkCalls: networkList };
+  }, [events]);
+
+  const displayedEvents = useMemo(() => {
+    switch (viewMode) {
+      case 'logs':
+        return logs;
+      case 'network':
+        return networkCalls;
+      default:
+        return events;
+    }
+  }, [viewMode, logs, networkCalls, events]);
 
   if (loading) {
     return (
@@ -70,37 +94,42 @@ function RunTimeline() {
       </div>
 
       <div className="card">
-        <h2 style={{ marginBottom: '0.5rem' }}>Run Timeline</h2>
-        <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-          <code style={{ fontSize: '0.9rem' }}>{runId}</code>
-        </p>
-
-        <div className="filters">
-          <div className="filter-group">
-            <label>Filter by Event Type</label>
-            <select
-              className="input"
-              value={eventTypeFilter}
-              onChange={(e) => setEventTypeFilter(e.target.value)}
-              style={{ width: '250px' }}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div>
+            <h2 style={{ marginBottom: '0.5rem' }}>Run Timeline</h2>
+            <p style={{ color: '#6b7280', margin: 0 }}>
+              <code style={{ fontSize: '0.9rem' }}>{runId}</code>
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              className={`button ${viewMode === 'all' ? 'button-primary' : 'button-secondary'}`}
+              onClick={() => setViewMode('all')}
             >
-              <option value="">All Events ({events.length})</option>
-              {uniqueEventTypes.map(type => (
-                <option key={type} value={type}>
-                  {type} ({events.filter(e => e.event_type === type).length})
-                </option>
-              ))}
-            </select>
+              All ({events.length})
+            </button>
+            <button
+              className={`button ${viewMode === 'logs' ? 'button-primary' : 'button-secondary'}`}
+              onClick={() => setViewMode('logs')}
+            >
+              Logs ({logs.length})
+            </button>
+            <button
+              className={`button ${viewMode === 'network' ? 'button-primary' : 'button-secondary'}`}
+              onClick={() => setViewMode('network')}
+            >
+              Network Calls ({networkCalls.length})
+            </button>
           </div>
         </div>
 
-        {filteredEvents.length === 0 ? (
+        {displayedEvents.length === 0 ? (
           <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem' }}>
-            No events found for this run.
+            No {viewMode === 'all' ? '' : viewMode} events found for this run.
           </p>
         ) : (
           <div className="timeline">
-            {filteredEvents.map((event) => (
+            {displayedEvents.map((event) => (
               <div key={event.event_id} className="timeline-item">
                 <div className="timeline-dot"></div>
                 <EventCard event={event} />

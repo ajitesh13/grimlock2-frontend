@@ -65,4 +65,7 @@ export interface NetworkCallData {
   duration_ms?: number;
   request_headers?: Record<string, string>;
   response_headers?: Record<string, string>;
+  request_payload?: any;
+  response_payload?: any;
+  error?: string;
 }
