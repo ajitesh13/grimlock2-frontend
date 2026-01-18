@@ -1,4 +1,3 @@
-import React from 'react';
 import type { HumanEditData } from '../types';
 
 interface HumanEditDiffProps {

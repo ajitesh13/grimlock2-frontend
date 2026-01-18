@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RunsList from './components/RunsList';
 import RunTimeline from './components/RunTimeline';

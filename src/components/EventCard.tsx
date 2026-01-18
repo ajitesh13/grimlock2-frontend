@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import HumanEditDiff from './HumanEditDiff';
 import type { Event, ToolCallData, AgentStepData, NetworkCallData, HumanEditData } from '../types';
