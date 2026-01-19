@@ -13,11 +13,16 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@heroui/react": "^2.8.7",
+    "@heroui/theme": "^2.4.25",
+    "autoprefixer": "^10.4.23",
     "axios": "^1.6.2",
     "date-fns": "^3.0.0",
+    "postcss": "^8.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.1",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

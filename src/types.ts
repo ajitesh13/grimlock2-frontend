@@ -12,6 +12,9 @@ export interface Event {
   timestamp: string;
   sequence_num: number | null;
   created_at: string;
+  span_id?: string | null;
+  parent_span_id?: string | null;
+  trace_id?: string | null;
 }
 
 export interface Run {
@@ -68,6 +71,7 @@ export interface NetworkCallData {
   request_payload?: any;
   response_payload?: any;
   error?: string;
+  tool_call_id?: string; // Links network call to a tool call
 }
 
 export interface LLMCallData {

@@ -57,9 +57,9 @@ function RunsList() {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: '2rem', height: 'auto', overflow: 'auto' }}>
       <div className="card">
-        <h2 style={{ marginBottom: '1rem' }}>Audit Trail Runs</h2>
+        <h2 style={{ marginBottom: '1rem', color: '#ffffff' }}>Audit Trail Runs</h2>
         
         <div className="filters">
           <div className="filter-group">
@@ -84,7 +84,7 @@ function RunsList() {
         </div>
 
         {runs.length === 0 ? (
-          <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem' }}>
+          <p style={{ color: '#9ca3af', textAlign: 'center', padding: '2rem' }}>
             No runs found. Start using the Python SDK to create audit trails.
           </p>
         ) : (

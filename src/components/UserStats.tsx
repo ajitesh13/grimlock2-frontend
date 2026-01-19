@@ -14,8 +14,8 @@ function StatCard({ label, value, color }: StatCardProps) {
     <div style={{
       padding: '1.5rem',
       borderRadius: '8px',
-      backgroundColor: '#f9fafb',
-      border: `2px solid ${color}20`,
+      backgroundColor: '#1a1a1a',
+      border: `1px solid ${color}40`,
     }}>
       <div style={{ 
         fontSize: '2rem', 
@@ -25,7 +25,7 @@ function StatCard({ label, value, color }: StatCardProps) {
       }}>
         {value}
       </div>
-      <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+      <div style={{ fontSize: '0.9rem', color: '#9ca3af' }}>
         {label}
       </div>
     </div>
@@ -84,7 +84,7 @@ function UserStats() {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: '2rem', height: 'auto', overflow: 'auto' }}>
       <div style={{ marginBottom: '1rem' }}>
         <button 
           className="button button-secondary"
@@ -95,21 +95,21 @@ function UserStats() {
       </div>
 
       <div className="card">
-        <h2 style={{ marginBottom: '1rem' }}>User Statistics</h2>
+        <h2 style={{ marginBottom: '1rem', color: '#ffffff' }}>User Statistics</h2>
         
         <div style={{ marginBottom: '1.5rem' }}>
-          <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '0.25rem' }}>
+          <div style={{ fontSize: '0.85rem', color: '#9ca3af', marginBottom: '0.25rem' }}>
             User Token Hash
           </div>
-          <code style={{ fontSize: '0.9rem' }}>{stats.user_token_hash}</code>
+          <code style={{ fontSize: '0.9rem', color: '#e5e5e5' }}>{stats.user_token_hash}</code>
         </div>
 
         {stats.user_id && (
           <div style={{ marginBottom: '1.5rem' }}>
-            <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '0.25rem' }}>
+            <div style={{ fontSize: '0.85rem', color: '#9ca3af', marginBottom: '0.25rem' }}>
               User ID
             </div>
-            <div>{stats.user_id}</div>
+            <div style={{ color: '#e5e5e5' }}>{stats.user_id}</div>
           </div>
         )}
 
