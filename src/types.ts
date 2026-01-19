@@ -69,3 +69,38 @@ export interface NetworkCallData {
   response_payload?: any;
   error?: string;
 }
+
+export interface LLMCallData {
+  framework?: string;
+  model?: string;
+  provider?: string;
+  prompts?: any;
+  outputs?: any;
+  token_usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  };
+  duration_ms?: number;
+  status?: 'ok' | 'error';
+  error?: string;
+  error_type?: string;
+  stack_trace?: string;
+  tags?: string[];
+  metadata?: Record<string, any>;
+}
+
+export interface AgentRunData {
+  framework?: string;
+  chain_type?: string;
+  agent_name?: string;
+  inputs?: any;
+  outputs?: any;
+  duration_ms?: number;
+  status?: 'ok' | 'error';
+  error?: string;
+  error_type?: string;
+  stack_trace?: string;
+  tags?: string[];
+  metadata?: Record<string, any>;
+}

@@ -40,11 +40,16 @@ function RunTimeline() {
     const networkList: Event[] = [];
 
     events.forEach(event => {
+      // Network-related events
       if (event.event_type === 'NETWORK_CALL' || 
           event.event_type === 'TOOL_CALL_START' || 
-          event.event_type === 'TOOL_CALL_END') {
+          event.event_type === 'TOOL_CALL_END' ||
+          event.event_type === 'tool.call.start' ||
+          event.event_type === 'tool.call.end' ||
+          event.event_type === 'tool.call.error') {
         networkList.push(event);
       } else {
+        // All other events (agent runs, LLM calls, agent steps, human edits, etc.)
         logsList.push(event);
       }
     });
